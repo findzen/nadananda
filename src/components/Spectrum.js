@@ -32,10 +32,10 @@ class Spectrum extends Component {
 }
 
 function drawSpectrum(analyzer, ctx) {
-  var width = ctx.canvas.width;
-  var height = ctx.canvas.height;
-  var freqData = new Uint8Array(analyzer.frequencyBinCount);
-  var scaling = height / 256;
+  let width = ctx.canvas.width;
+  let height = ctx.canvas.height;
+  let freqData = new Uint8Array(analyzer.frequencyBinCount);
+  let scaling = height / 256;
 
   analyzer.getByteFrequencyData(freqData);
 
@@ -46,7 +46,7 @@ function drawSpectrum(analyzer, ctx) {
   ctx.strokeStyle = 'rgb(0, 200, 0)';
   ctx.beginPath();
 
-  for (var x = 0; x < width; x++)
+  for (let x = 0; x < width; x++)
     ctx.lineTo(x, height - freqData[x] * scaling);
 
   ctx.stroke();

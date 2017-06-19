@@ -16,6 +16,8 @@ class Tone {
     this.osc.type = DEFAULT_TYPE;
     this.osc.connect(this.gain);
     this.osc.start();
+
+
   }
 
   set frequency(val) {
@@ -33,6 +35,43 @@ class Tone {
   get mute() {
     return this.gain.gain.value === MIN_VOLUME;
   }
+
+  set partials(val) {
+    let coefs = this.getRealImaginary(val);
+    console.log(coefs);
+    let periodicWave = this.audioContext.createPeriodicWave(coefs[0], coefs[1]);
+
+    this.osc.setPeriodicWave(periodicWave);
+  }
+
+  set type(type) {
+    this.osc.type = type;
+  }
+
+  getRealImaginary(partials = [], phase = 0) {
+    let fftSize = 4096;
+    let periodicWaveSize = fftSize / 2;
+
+    let real = new Float32Array(periodicWaveSize);
+    let imag = new Float32Array(periodicWaveSize);
+
+    // let partials = [true, true, false, true, false, true, false, false, true];
+    let partialCount = partials.length;
+
+    for (let n = 1; n < periodicWaveSize; ++n) {
+      let piFactor = 2 / (n * Math.PI);
+      let b = n <= partialCount && partials[n - 1] ? 1 : 0;
+
+      if (b !== 0) {
+        real[n] = -b * Math.sin(phase * n);
+        imag[n] = b * Math.cos(phase * n);
+      } else {
+        real[n] = 0;
+        imag[n] = 0;
+      }
+    }
+    return [real, imag];
+  };
 }
 
 export default Tone;

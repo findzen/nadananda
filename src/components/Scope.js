@@ -32,12 +32,12 @@ class Scope extends Component {
 }
 
 function drawScope(analyzer, ctx) {
-  var width = ctx.canvas.width;
-  var height = ctx.canvas.height;
-  var timeData = new Uint8Array(analyzer.frequencyBinCount);
-  var scaling = height / 256;
-  var risingEdge = 0;
-  var edgeThreshold = 5;
+  let width = ctx.canvas.width;
+  let height = ctx.canvas.height;
+  let timeData = new Uint8Array(analyzer.frequencyBinCount);
+  let scaling = height / 256;
+  let risingEdge = 0;
+  let edgeThreshold = 5;
 
   analyzer.getByteTimeDomainData(timeData);
 
@@ -55,7 +55,7 @@ function drawScope(analyzer, ctx) {
   while (timeData[risingEdge++] - 128 < edgeThreshold && risingEdge <= width);
   if (risingEdge >= width) risingEdge = 0;
 
-  for (var x = risingEdge; x < timeData.length && x - risingEdge < width; x++)
+  for (let x = risingEdge; x < timeData.length && x - risingEdge < width; x++)
     ctx.lineTo(x - risingEdge, height - timeData[x] * scaling);
 
   ctx.stroke();

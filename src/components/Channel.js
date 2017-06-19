@@ -13,31 +13,41 @@ class Channel extends Component {
 
     this.toggleMute = this.toggleMute.bind(this);
     this.onFrequencyChange = this.onFrequencyChange.bind(this);
+    this.onPartialChange = this.onPartialChange.bind(this);
 
     this.state = {
       frequency: this.tone.frequency,
       mute: true
     };
-  }
 
+    this.state.partials = Array(32).fill(false);
+    this.state.partials[0] = true;
 
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
+    console.log('this.state.partials', this.state.partials);
   }
 
   onFrequencyChange(e) {
     if (!e.target.value) return;
 
-    var val = e.target.value;
+    let val = e.target.value;
 
     this.setState(function (prevState, props) {
       this.tone.frequency = val;
 
       return { frequency: val };
+    });
+  }
+
+  onPartialChange(index, val, e) {
+    console.log('onPartialChange', index, val);
+
+    let partials = this.state.partials;
+    partials[index] = !val;
+
+
+    this.setState(() => {
+      this.tone.partials = partials;
+      return { partials: partials }
     });
   }
 
@@ -65,20 +75,36 @@ class Channel extends Component {
 
         <input
           type="number"
-          min='20'
-          max='2000'
+          min="20"
+          max="7777"
           value={this.state.frequency}
           onChange={this.onFrequencyChange}
         ></input>
         <br/>
         <input
           type="range"
-          min='20'
-          max='2000'
+          min="20"
+          max="7777"
           value={this.state.frequency}
           onChange={this.onFrequencyChange}
         ></input>
         <br/>
+
+        <div>
+          {this.state.partials.map(function (val, i) {
+              return (
+                <div key={i}>
+                  <label>{i}</label>
+                  <input
+                    onChange={this.onPartialChange.bind(this, i, val)}
+                    type="checkbox"
+                    checked={val}
+                  ></input>
+                </div>
+              )
+          }.bind(this))}
+        </div>
+
 
       </div>
     );

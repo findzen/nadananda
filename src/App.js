@@ -22,14 +22,6 @@ class App extends Component {
   render() {
     return (
       <main>
-        <div>
-          <Channel
-            tone={this.tone}
-            name="Left"
-          ></Channel>
-
-        </div>
-
         <Scope
           analyzer={this.analyzer}
           audioContext={this.audioContext}
@@ -39,6 +31,12 @@ class App extends Component {
           audioContext={this.audioContext}
         ></Spectrum>
 
+        <div>
+          <Channel
+            tone={this.tone}
+            name="Left"
+          ></Channel>
+        </div>
       </main>
     );
   }
