@@ -62,8 +62,6 @@ class Channel extends Component {
   render() {
     return (
       <div className="channel">
-        <h2>{this.props.name}</h2>
-
         <button onClick={this.toggleMute}>
           {this.state.mute ? 'Unmute' : 'Mute'}
         </button>
@@ -94,12 +92,14 @@ class Channel extends Component {
           {this.state.partials.map(function (val, i) {
               return (
                 <div key={i}>
-                  <label>{i}</label>
                   <input
                     onChange={this.onPartialChange.bind(this, i, val)}
                     type="checkbox"
                     checked={val}
                   ></input>
+                  <label>
+                    <strong>{i}</strong> {(i + 1) * this.state.frequency}hz
+                  </label>
                 </div>
               )
           }.bind(this))}

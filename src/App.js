@@ -27,6 +27,7 @@ class App extends Component {
           analyzer={this.analyzer}
           audioContext={this.audioContext}
         ></Scope>
+        <br/>
         <Spectrum
           analyzer={this.analyzer}
           audioContext={this.audioContext}
