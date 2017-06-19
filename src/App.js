@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
 
     this.analyzer = this.audioContext.createAnalyser();
