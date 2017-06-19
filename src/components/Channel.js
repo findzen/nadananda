@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
-import Tone from 'tone';
 
-const MAX_VOLUME = -10;
-const MIN_VOLUME = -100;
+const DEFAULT_FREQUENCY = 256;
+const DEFAULT_TYPE = 'sine';
+const MAX_VOLUME = 0.5;
+const MIN_VOLUME = 0;
 
 class Channel extends Component {
   constructor(props) {
     super(props);
 
-    // this.osc = new Tone.PolySynth(6, Tone.SimpleSynth, {
-    //   oscillator: {
-    //     partials: [0, 2, 3, 4]
-    //   }
-    // }).toMaster();
-
-    this.osc = new Tone.Oscillator({
-      frequency: 256,
-      volume: MAX_VOLUME
-    }).toMaster().start();
-
-    this.osc.mute = true;
-
-    console.log('this', this);
-    console.log('this.osc', this.osc);
+    this.tone = props.tone;
 
     this.toggleMute = this.toggleMute.bind(this);
     this.onFrequencyChange = this.onFrequencyChange.bind(this);
 
     this.state = {
-      frequency: 256,
+      frequency: this.tone.frequency,
       mute: true
     };
   }
@@ -43,25 +30,22 @@ class Channel extends Component {
   }
 
   onFrequencyChange(e) {
-    console.log('onFrequencyChange', e.target.value);
     if (!e.target.value) return;
 
     var val = e.target.value;
 
     this.setState(function (prevState, props) {
-      this.osc.frequency.setValueAtTime(val);
+      this.tone.frequency = val;
 
       return { frequency: val };
     });
   }
 
   toggleMute() {
-    console.log('toggleMute', this);
-
     this.setState(function (prevState, props) {
-      this.osc.mute = !this.osc.mute;
+      this.tone.mute = !prevState.mute;
 
-      return { mute: !prevState.mute };
+      return { mute: this.tone.mute };
     });
   }
 
@@ -95,7 +79,6 @@ class Channel extends Component {
           onChange={this.onFrequencyChange}
         ></input>
         <br/>
-
 
       </div>
     );
