@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 
-const DEFAULT_FREQUENCY = 256;
-const DEFAULT_TYPE = 'sine';
-const MAX_VOLUME = 0.5;
-const MIN_VOLUME = 0;
-
 class Channel extends Component {
   constructor(props) {
     super(props);
@@ -15,15 +10,14 @@ class Channel extends Component {
     this.onFrequencyChange = this.onFrequencyChange.bind(this);
     this.onPartialChange = this.onPartialChange.bind(this);
 
+    let partials = Array(32).fill(false);
+    partials[0] = true;
+
     this.state = {
       frequency: this.tone.frequency,
-      mute: true
+      mute: true,
+      partials: partials
     };
-
-    this.state.partials = Array(32).fill(false);
-    this.state.partials[0] = true;
-
-    console.log('this.state.partials', this.state.partials);
   }
 
   onFrequencyChange(e) {
@@ -39,8 +33,6 @@ class Channel extends Component {
   }
 
   onPartialChange(index, val, e) {
-    console.log('onPartialChange', index, val);
-
     let partials = this.state.partials;
     partials[index] = !val;
 
@@ -90,18 +82,18 @@ class Channel extends Component {
 
         <div>
           {this.state.partials.map(function (val, i) {
-              return (
-                <div key={i}>
-                  <input
-                    onChange={this.onPartialChange.bind(this, i, val)}
-                    type="checkbox"
-                    checked={val}
-                  ></input>
-                  <label>
-                    <strong>{i}</strong> {(i + 1) * this.state.frequency}hz
-                  </label>
-                </div>
-              )
+            return (
+              <div key={i}>
+                <input
+                  onChange={this.onPartialChange.bind(this, i, val)}
+                  type="checkbox"
+                  checked={val}
+                ></input>
+                <label>
+                  <strong>{i}</strong> {(i + 1) * this.state.frequency}hz
+                </label>
+              </div>
+            )
           }.bind(this))}
         </div>
 
