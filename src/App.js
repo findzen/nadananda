@@ -18,6 +18,16 @@ class App extends Component {
 
     this.tone = new Tone({ audioContext: this.audioContext });
     this.tone.osc.connect(this.analyzer);
+
+    window.addEventListener('touchstart', () => {
+      // create empty buffer
+      let buffer = this.audioContext.createBuffer(1, 1, 22050);
+      let source = this.audioContext.createBufferSource();
+
+      source.buffer = buffer;
+      source.connect(this.audioContext.destination);
+      source.noteOn(0);
+    }, false);
   }
 
   render() {
