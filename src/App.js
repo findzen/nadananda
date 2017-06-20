@@ -16,8 +16,11 @@ class App extends Component {
     this.analyzer = this.audioContext.createAnalyser();
     this.analyzer.fftSize = 2048;
 
-    this.tone = new Tone({ audioContext: this.audioContext });
-    this.tone.osc.connect(this.analyzer);
+    this.tones = [];
+
+    for (let i in [0, 1]) {
+      this.tones.push(this.createTone());
+    }
 
     window.addEventListener('touchstart', () => {
       // create empty buffer
@@ -28,6 +31,13 @@ class App extends Component {
       source.connect(this.audioContext.destination);
       source.noteOn(0);
     }, false);
+  }
+
+  createTone() {
+    let tone = new Tone({ audioContext: this.audioContext });
+    tone.osc.connect(this.analyzer);
+
+    return tone;
   }
 
   render() {
@@ -43,12 +53,7 @@ class App extends Component {
           audioContext={this.audioContext}
         ></Spectrum>
 
-        <div>
-          <Channel
-            tone={this.tone}
-            name="Left"
-          ></Channel>
-        </div>
+        {this.tones.map((tone, i) => <Channel key={i} tone={tone}></Channel>)}
       </main>
     );
   }

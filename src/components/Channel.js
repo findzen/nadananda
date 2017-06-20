@@ -63,25 +63,25 @@ class Channel extends Component {
         <label>Frequency</label>
         <br/>
 
-        <input
-          type="number"
-          min="20"
-          max="7777"
-          value={this.state.frequency}
-          onChange={this.onFrequencyChange}
-        ></input>
-        <br/>
-        <input
-          type="range"
-          min="20"
-          max="7777"
-          value={this.state.frequency}
-          onChange={this.onFrequencyChange}
-        ></input>
-        <br/>
+        <div className="input-group">
+          <input
+            type="number"
+            min="20"
+            max="7777"
+            value={this.state.frequency}
+            onChange={this.onFrequencyChange}
+          ></input>
+          <input
+            type="range"
+            min="20"
+            max="7777"
+            value={this.state.frequency}
+            onChange={this.onFrequencyChange}
+          ></input>
+        </div>
 
         <div>
-          {this.state.partials.map(function (val, i) {
+          {this.state.partials.map((val, i) => {
             return (
               <div key={i}>
                 <input
@@ -94,7 +94,7 @@ class Channel extends Component {
                 </label>
               </div>
             )
-          }.bind(this))}
+          })}
         </div>
 
 
