@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Knob from 'react-canvas-knob';
 
 class Channel extends Component {
   constructor(props) {
@@ -20,11 +21,7 @@ class Channel extends Component {
     };
   }
 
-  onFrequencyChange(e) {
-    if (!e.target.value) return;
-
-    let val = e.target.value;
-
+  onFrequencyChange(val) {
     this.setState((prevState, props) => {
       this.tone.frequency = val;
 
@@ -63,22 +60,13 @@ class Channel extends Component {
         <label>Frequency</label>
         <br/>
 
-        <div className="input-group">
-          <input
-            type="number"
-            min="20"
-            max="7777"
-            value={this.state.frequency}
-            onChange={this.onFrequencyChange}
-          ></input>
-          <input
-            type="range"
-            min="20"
-            max="7777"
-            value={this.state.frequency}
-            onChange={this.onFrequencyChange}
-          ></input>
-        </div>
+        <Knob
+          min={20}
+          max={7777}
+          value={this.state.frequency}
+          onChange={this.onFrequencyChange}
+          onChangeEnd={this.onFrequencyChange}
+        />
 
         <div>
           {this.state.partials.map((val, i) => {
