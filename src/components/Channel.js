@@ -25,7 +25,7 @@ class Channel extends Component {
 
     let val = e.target.value;
 
-    this.setState(function (prevState, props) {
+    this.setState((prevState, props) => {
       this.tone.frequency = val;
 
       return { frequency: val };
@@ -44,7 +44,7 @@ class Channel extends Component {
   }
 
   toggleMute() {
-    this.setState(function (prevState, props) {
+    this.setState((prevState, props) => {
       this.tone.mute = !prevState.mute;
 
       return { mute: this.tone.mute };

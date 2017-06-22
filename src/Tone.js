@@ -45,6 +45,14 @@ class Tone {
     this.osc.type = type;
   }
 
+  // getRealImaginary(partials = []) {
+  //   let real = new Float32Array([0, 1, 0.01, 1, 0.01]);
+  //   let imag = new Float32Array(real.length);
+
+  //   return [real, imag];
+  // };
+
+  // ____getRealImaginary(partials = [], phase = 0) {
   getRealImaginary(partials = [], phase = 0) {
     let fftSize = 4096;
     let periodicWaveSize = fftSize / 2;
@@ -65,6 +73,7 @@ class Tone {
         imag[n] = 0;
       }
     }
+
     return [real, imag];
   };
 }

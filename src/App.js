@@ -18,7 +18,8 @@ class App extends Component {
 
     this.tones = [];
 
-    for (let i in [0, 1]) {
+    // for (let i in [0, 1]) {
+    for (let i in [0]) {
       this.tones.push(this.createTone());
     }
 
