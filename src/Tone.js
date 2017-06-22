@@ -41,6 +41,10 @@ class Tone {
     this.osc.setPeriodicWave(periodicWave);
   }
 
+  get type() {
+    return this.osc.type;
+  }
+
   set type(type) {
     this.osc.type = type;
   }

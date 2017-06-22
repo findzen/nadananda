@@ -17,7 +17,8 @@ class Channel extends Component {
     this.state = {
       frequency: this.tone.frequency,
       mute: true,
-      partials: partials
+      partials: partials,
+      type: this.tone.type
     };
   }
 
@@ -40,6 +41,14 @@ class Channel extends Component {
     });
   }
 
+  onTypeChange = (e) => {
+    let val = e.target.value;
+
+    this.tone.type = val;
+
+    this.setState(() => { type: val });
+  };
+
   toggleMute() {
     this.setState((prevState, props) => {
       this.tone.mute = !prevState.mute;
@@ -59,6 +68,13 @@ class Channel extends Component {
 
         <label>Frequency</label>
         <br/>
+
+        <select onChange={this.onTypeChange}>
+          <option value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+          <option value="triangle">Triangle</option>
+        </select>
 
         <Knob
           min={20}
