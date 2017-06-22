@@ -30,7 +30,7 @@ class App extends Component {
 
       source.buffer = buffer;
       source.connect(this.audioContext.destination);
-      source.noteOn(0);
+      source.start();
     }, false);
   }
 
